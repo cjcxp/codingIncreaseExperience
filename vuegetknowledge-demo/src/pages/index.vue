@@ -1,5 +1,7 @@
 <template>
   <div class="block">
+    <vue-scroll id="mainBody" :ops="ops">
+      
       <el-carousel>
         <el-input
         class="app_searchInput"
@@ -25,16 +27,57 @@
       </div>
 
       <on-line/>
+      <everyday-book/>
+      <on-line/>
+    </vue-scroll>
+      
+
+    <div class="tapBar">
+        <div>
+          <img src="../images/发现.png">
+          <span>发现</span>
+        </div>
+        <div>
+          <img src="../images/学习.png">
+          <span>今日学习</span>
+        </div>
+        <div>
+          <img src="../images/账本.png">
+          <span>知识账本</span>
+        </div>
+        <div>
+          <img src="../images/已购应用.png">
+          <span>已购</span>
+        </div>
+        <div>
+          <img src="../images/我的.png">
+          <span>我的</span>
+        </div>
     </div>
+  </div>
 </template>
 <script>
 import OnLine from './online'
+import EverydayBook from './everydayBook'
 export default {
   components: {
-      OnLine
+      OnLine,
+      EverydayBook
   },
   data() {
     return {
+      ops: {
+            vBar: {
+              opacity: 0,
+              background: '',
+              pos: 'right'
+            },
+            hBar: {
+              opacity: 0,
+              background: '',
+              pos: 'bottom'
+            }
+      },
       serachData: '',
       items: [
         {
@@ -56,8 +99,8 @@ export default {
           title: '听书'
         },
         {
-          src: require('../images/absorve.png'),
-          title: '订阅专栏'
+          src: require('../images/subscribe.png'),
+          title: '订阅'
         },
         {
           src: require('../images/markit.png'),
@@ -73,12 +116,23 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    var screWid = document.documentElement.clientWidth;
+    var screHei = document.documentElement.clientHeight;
+    console.log(screWid, screHei);
+    var mainBody = document.getElementById('mainBody');
+    mainBody.style.height = (screHei) - 75 + "px";
+    console.log(mainBody.style.height);
+  },
+  methods: {
+
   }
 };
 </script>
 <style scoped>
 .block {
-    background-color: #fff;
+    background-color: rgb(235, 228, 228);
 }
 
 .app_searchInput {
@@ -97,7 +151,8 @@ export default {
 }
 
 .app_icon {
-    border-bottom: 1px solid rgb(170, 166, 166);
+    background-color: #fff;
+    text-align: center;
 }
 
 .app_icon ul {
@@ -105,8 +160,6 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   /* align-items: center; */
-  align-content: center;
-  margin-top: .2rem;
 }
 
 .app_icon ul li {
@@ -126,11 +179,30 @@ export default {
   margin: 0;
 }
 
-.el-carousel__item:nth-child(2n) {
+/* .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+} */
+.tapBar {
+  /* height: 1.2rem; */
+  width: 10rem;
+  display: flex;
+  height: 1rem;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 0;
+  text-align: center;
+  background-color: #fff;
+  border-top: 1px solid rgb(235, 228, 228);
+}
+
+.tapBar img {
+  height: .5rem;
+  display: block;
+  margin: 0 auto;
 }
 </style>
